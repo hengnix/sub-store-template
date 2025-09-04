@@ -1,0 +1,8 @@
+sub-store/
+ui/
+
+*.db
+*.exe
+
+*.jsonc
+!*template*.jsonc
