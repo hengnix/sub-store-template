@@ -16,6 +16,10 @@ let proxies = await produceArtifact({
 config.outbounds.push(...proxies)
 
 config.outbounds.map((i) => {
+  if (i.outbounds === null) {
+    i.outbounds = []
+  }
+
   if (['all', 'all-auto'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies))
   }
@@ -37,12 +41,12 @@ config.outbounds.map((i) => {
 })
 
 config.outbounds.forEach((outbound) => {
-  if (outbound.outbounds === null) {
+  if (Array.isArray(outbound.outbounds) && outbound.outbounds.length === 0) {
     if (!compatible) {
       config.outbounds.push(compatible_outbound)
       compatible = true
     }
-    outbound.outbounds = [compatible_outbound.tag]
+    outbound.outbounds.push(compatible_outbound.tag)
   }
 })
 
