@@ -178,7 +178,7 @@
     },
     {
       "type": "direct",
-      "tag": "DIRECT"
+      "tag": "Direct"
     }
   ],
   "route": {
