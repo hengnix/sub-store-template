@@ -8,7 +8,7 @@
       {
         "type": "https",
         "tag": "google",
-        "detour": "proxy",
+        "detour": "Proxy",
         "server": "8.8.8.8"
       },
       {
@@ -78,139 +78,107 @@
   "outbounds": [
     {
       "type": "selector",
-      "tag": "hk",
-      "outbounds": null
-    },
-    {
-      "type": "urltest",
-      "tag": "hk-auto",
-      "outbounds": null,
-      "url": "https://cp.cloudflare.com/generate_204"
-    },
-    {
-      "type": "selector",
-      "tag": "tw",
-      "outbounds": null
-    },
-    {
-      "type": "urltest",
-      "tag": "tw-auto",
-      "outbounds": null,
-      "url": "https://cp.cloudflare.com/generate_204"
-    },
-    {
-      "type": "selector",
-      "tag": "sg",
-      "outbounds": null
-    },
-    {
-      "type": "urltest",
-      "tag": "sg-auto",
-      "outbounds": null,
-      "url": "https://cp.cloudflare.com/generate_204"
-    },
-    {
-      "type": "selector",
-      "tag": "jp",
+      "tag": "HK",
       "outbounds": null
     },
     {
       "type": "selector",
-      "tag": "us",
+      "tag": "TW",
       "outbounds": null
     },
     {
       "type": "selector",
-      "tag": "proxy",
-      "outbounds": [
-        "hk",
-        "hk-auto",
-        "tw",
-        "tw-auto",
-        "sg",
-        "sg-auto",
-        "jp",
-        "us"
-      ],
-      "default": "hk-auto"
+      "tag": "SG",
+      "outbounds": null
     },
     {
       "type": "selector",
-      "tag": "ai",
-      "outbounds": [
-        "sg",
-        "jp",
-        "us",
-        "proxy"
-      ],
-      "default": "us"
+      "tag": "JP",
+      "outbounds": null
     },
     {
       "type": "selector",
-      "tag": "youtube",
-      "outbounds": [
-        "hk",
-        "tw",
-        "sg",
-        "jp",
-        "us",
-        "proxy"
-      ],
-      "default": "hk"
+      "tag": "US",
+      "outbounds": null
     },
     {
       "type": "selector",
-      "tag": "google",
+      "tag": "Proxy",
       "outbounds": [
-        "hk",
-        "hk-auto",
-        "tw",
-        "tw-auto",
-        "sg",
-        "sg-auto",
-        "jp",
-        "us",
-        "proxy"
+        "HK",
+        "TW",
+        "SG",
+        "JP",
+        "US"
       ],
-      "default": "hk-auto"
+      "default": "HK"
     },
     {
       "type": "selector",
-      "tag": "final",
+      "tag": "AI",
       "outbounds": [
-        "hk",
-        "hk-auto",
-        "tw",
-        "tw-auto",
-        "sg",
-        "sg-auto",
-        "jp",
-        "us",
-        "proxy",
-        "direct"
+        "US",
+        "Proxy"
       ],
-      "default": "proxy"
+      "default": "US"
+    },
+    {
+      "type": "selector",
+      "tag": "YouTube",
+      "outbounds": [
+        "HK",
+        "TW",
+        "SG",
+        "JP",
+        "US",
+        "Proxy"
+      ],
+      "default": "HK"
+    },
+    {
+      "type": "selector",
+      "tag": "Google",
+      "outbounds": [
+        "HK",
+        "TW",
+        "SG",
+        "JP",
+        "US",
+        "Proxy"
+      ],
+      "default": "SG"
+    },
+    {
+      "type": "selector",
+      "tag": "Final",
+      "outbounds": [
+        "HK",
+        "TW",
+        "SG",
+        "JP",
+        "US",
+        "Proxy",
+        "Direct"
+      ],
+      "default": "Proxy"
     },
     {
       "type": "selector",
       "tag": "GLOBAL",
       "outbounds": [
-        "hk",
-        "hk-auto",
-        "tw",
-        "tw-auto",
-        "sg",
-        "sg-auto",
-        "jp",
-        "us",
-        "proxy",
-        "direct"
+        "HK",
+        "TW",
+        "SG",
+        "JP",
+        "US",
+        "Proxy",
+        "Direct"
       ],
-      "default": "direct"
+      "default": "Direct"
     },
     {
       "type": "direct",
-      "tag": "direct"
+      "tag": "DIRECT"
     }
   ],
   "route": {
@@ -239,7 +207,7 @@
       },
       {
         "ip_is_private": true,
-        "outbound": "direct"
+        "outbound": "Direct"
       },
       {
         "clash_mode": "Global",
@@ -247,26 +215,30 @@
       },
       {
         "clash_mode": "Direct",
-        "outbound": "direct"
+        "outbound": "Direct"
       },
       {
         "domain_suffix": [
           "dcg.microsoft.com",
           "steamserver.net"
         ],
-        "outbound": "direct"
+        "outbound": "Direct"
       },
       {
         "rule_set": "steam@cn_domain",
-        "outbound": "direct"
+        "outbound": "Direct"
       },
       {
         "rule_set": "ai_domain",
-        "outbound": "ai"
+        "outbound": "AI"
       },
       {
         "rule_set": "youtube_domain",
-        "outbound": "youtube"
+        "outbound": "YouTube"
+      },
+      {
+        "rule_set": "google_domain",
+        "outbound": "Google"
       },
       {
         "type": "logical",
@@ -278,122 +250,88 @@
           {
             "rule_set": [
               "cn_domain",
-              "apple_domain",
-              "google_domain",
               "telegram_domain"
             ],
             "invert": true
           }
         ],
-        "outbound": "proxy"
+        "outbound": "Proxy"
       },
       {
         "action": "resolve"
       },
       {
         "rule_set": [
-          "telegram_ip",
-          "telegram_domain"
+          "telegram_domain",
+          "telegram_ip"
         ],
-        "outbound": "sg"
+        "outbound": "SG"
       },
       {
         "rule_set": [
-          "google_ip",
-          "google_domain"
+          "cn_domain",
+          "cn_ip"
         ],
-        "outbound": "google"
-      },
-      {
-        "rule_set": [
-          "apple_ip",
-          "apple_domain"
-        ],
-        "outbound": "direct"
-      },
-      {
-        "rule_set": [
-          "cn_ip",
-          "cn_domain"
-        ],
-        "outbound": "direct"
+        "outbound": "Direct"
       }
     ],
     "rule_set": [
       {
         "type": "remote",
         "tag": "ai_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ai-chat-!cn.srs",
-        "download_detour": "direct"
-      },
-      {
-        "type": "remote",
-        "tag": "apple_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geosite/apple.srs",
-        "download_detour": "direct"
-      },
-      {
-        "type": "remote",
-        "tag": "apple_ip",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geoip/apple.srs",
-        "download_detour": "direct"
+        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-ai-chat-!cn.srs",
+        "download_detour": "Direct"
       },
       {
         "type": "remote",
         "tag": "cn_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geosite/cn.srs",
-        "download_detour": "direct"
+        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-cn.srs",
+        "download_detour": "Direct"
       },
       {
         "type": "remote",
         "tag": "cn_ip",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
-        "download_detour": "direct"
+        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geoip@rule-set/geoip-cn.srs",
+        "download_detour": "Direct"
       },
       {
         "type": "remote",
         "tag": "google_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geosite/google.srs",
-        "download_detour": "direct"
-      },
-      {
-        "type": "remote",
-        "tag": "google_ip",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geoip/google.srs",
-        "download_detour": "direct"
+        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-google.srs",
+        "download_detour": "Direct"
       },
       {
         "type": "remote",
         "tag": "telegram_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geosite/telegram.srs",
-        "download_detour": "direct"
+        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-telegram.srs",
+        "download_detour": "Direct"
       },
       {
         "type": "remote",
         "tag": "telegram_ip",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geoip/telegram.srs",
-        "download_detour": "direct"
+        "download_detour": "Direct"
       },
       {
         "type": "remote",
         "tag": "proxy_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
-        "download_detour": "direct"
+        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-geolocation-!cn.srs",
+        "download_detour": "Direct"
       },
       {
         "type": "remote",
         "tag": "steam@cn_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/steam@cn.srs",
-        "download_detour": "direct"
+        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-steam@cn.srs",
+        "download_detour": "Direct"
       },
       {
         "type": "remote",
         "tag": "youtube_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geosite/youtube.srs",
-        "download_detour": "direct"
+        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-youtube.srs",
+        "download_detour": "Direct"
       }
     ],
-    "final": "final",
+    "final": "Final",
     "auto_detect_interface": true,
     "default_domain_resolver": "ali"
   },
@@ -407,7 +345,7 @@
       "external_controller": "127.0.0.1:9090",
       "external_ui": "ui",
       "external_ui_download_url": "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip",
-      "external_ui_download_detour": "proxy"
+      "external_ui_download_detour": "Proxy"
     }
   }
 }

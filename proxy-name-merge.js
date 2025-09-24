@@ -20,23 +20,20 @@ config.outbounds.map((i) => {
     i.outbounds = []
   }
 
-  if (['all', 'all-auto'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies))
+  if (['HK'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies, /HK/i))
   }
-  if (['hk', 'hk-auto'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /🇭🇰/i))
+  if (['TW'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies, /TW/i))
   }
-  if (['tw', 'tw-auto'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /🇨🇳/i))
+  if (['SG'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies, /SG/i))
   }
-  if (['jp', 'jp-auto'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /🇯🇵/i))
+  if (['JP'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies, /JP/i))
   }
-  if (['sg', 'sg-auto'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /🇸🇬/i))
-  }
-  if (['us', 'us-auto'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /🇺🇸/i))
+  if (['US'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies, /US/i))
   }
 })
 

@@ -1,29 +1,26 @@
 const regionMap = {
-  '🇭🇰': /港|hk|Hong Kong/i,
-  '🇨🇳': /台|tw|Taiwan/i,
-  '🇯🇵': /日|jp|Japan/i,
-  '🇸🇬': /新|sg|Singapore/i,
-  '🇺🇸': /美|us|United States/i,
+  '🇭🇰': { regex: /港|hk|Hong Kong/i, code: 'HK' },
+  '🇨🇳': { regex: /台|tw|Taiwan/i, code: 'TW' },
+  '🇸🇬': { regex: /新|sg|Singapore/i, code: 'SG' },
+  '🇯🇵': { regex: /日|jp|Japan/i, code: 'JP' },
+  '🇺🇸': { regex: /美|us|United States/i, code: 'US' },
 }
 
 const originalName = $server.name
 
-let regionFlag
-for (const [flag, regex] of Object.entries(regionMap)) {
+let regionFlag = ''
+let regionCode = ''
+
+for (const [flag, { regex, code }] of Object.entries(regionMap)) {
   if (regex.test(originalName)) {
     regionFlag = flag
+    regionCode = code
     break
   }
 }
 
-let newName = `[${$arguments.name}] ${regionFlag}`
+let newName = `[${$arguments.name}] ${regionFlag} ${regionCode}`
 
-// Check for special tags
-if (/高速/i.test(originalName)) {
-  newName += ' exp'
-}
-
-// Extract number
 const numberMatch = originalName.match(/(\d+)/)
 if (numberMatch) {
   newName += ` ${numberMatch[1]}`
