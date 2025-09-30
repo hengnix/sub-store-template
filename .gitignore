@@ -1,9 +1,13 @@
-rule-set/
+geodata/
 sub-store/
 ui/
 
 *.db
 *.exe
 
-*.jsonc
-!*template*.jsonc
+configs/*.jsonc
+!configs/*template*.jsonc
+
+$RECYCLE.BIN/
+
+[Dd]esktop.ini

@@ -23,7 +23,8 @@
       {
         "type": "fakeip",
         "tag": "fakeip",
-        "inet4_range": "198.18.0.0/15"
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
       }
     ],
     "rules": [
@@ -40,24 +41,36 @@
         "action": "reject"
       },
       {
+        "domain_suffix": [
+          "sztu.edu.cn",
+          "windowsphone.com"
+        ],
+        "server": "local"
+      },
+      {
+        "rule_set": [
+          "connectivity-check_domain",
+          "private_domain"
+        ],
+        "server": "local"
+      },
+      {
         "query_type": "A",
         "server": "fakeip",
         "rewrite_ttl": 1
-      },
-      {
-        "domain_suffix": "sztu.edu.cn",
-        "server": "local"
       },
       {
         "rule_set": "cn_domain",
         "server": "ali"
       }
     ],
-    "strategy": "ipv4_only"
+    "strategy": "ipv4_only",
+    "independent_cache": true
   },
   "inbounds": [
     {
       "type": "tun",
+      "tag": "tun-in",
       "address": "172.18.0.1/30",
       "auto_route": true,
       "stack": "system",
@@ -71,6 +84,7 @@
     },
     {
       "type": "mixed",
+      "tag": "mixed-in",
       "listen": "127.0.0.1",
       "listen_port": 12123
     }
@@ -79,27 +93,27 @@
     {
       "type": "selector",
       "tag": "HK",
-      "outbounds": null
+      "outbounds": []
     },
     {
       "type": "selector",
       "tag": "TW",
-      "outbounds": null
+      "outbounds": []
     },
     {
       "type": "selector",
       "tag": "SG",
-      "outbounds": null
+      "outbounds": []
     },
     {
       "type": "selector",
       "tag": "JP",
-      "outbounds": null
+      "outbounds": []
     },
     {
       "type": "selector",
       "tag": "US",
-      "outbounds": null
+      "outbounds": []
     },
     {
       "type": "selector",
@@ -220,12 +234,17 @@
       {
         "domain_suffix": [
           "dcg.microsoft.com",
-          "steamserver.net"
+          "windowsphone.com",
+          "windowsphone-int.com",
+          "cm.steampowered.com",
+          "fastly.steamstatic.com",
+          "steamcdn-a.akamaihd.net",
+          "steamcontent.com"
         ],
         "outbound": "Direct"
       },
       {
-        "rule_set": "steam@cn_domain",
+        "rule_set": "games@cn_domain",
         "outbound": "Direct"
       },
       {
@@ -279,31 +298,47 @@
       {
         "type": "remote",
         "tag": "ai_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-ai-chat-!cn.srs",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ai-chat-!cn.srs",
         "download_detour": "Direct"
       },
       {
         "type": "remote",
+        "tag": "connectivity-check_domain",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/connectivity-check.srs"
+      },
+      {
+        "type": "remote",
         "tag": "cn_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-cn.srs",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
         "download_detour": "Direct"
       },
       {
         "type": "remote",
         "tag": "cn_ip",
-        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geoip@rule-set/geoip-cn.srs",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
+        "download_detour": "Direct"
+      },
+      {
+        "type": "remote",
+        "tag": "games@cn_domain",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-games@cn.srs",
         "download_detour": "Direct"
       },
       {
         "type": "remote",
         "tag": "google_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-google.srs",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google.srs",
         "download_detour": "Direct"
       },
       {
         "type": "remote",
+        "tag": "private_domain",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs"
+      },
+      {
+        "type": "remote",
         "tag": "telegram_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-telegram.srs",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/telegram.srs",
         "download_detour": "Direct"
       },
       {
@@ -315,19 +350,13 @@
       {
         "type": "remote",
         "tag": "proxy_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-geolocation-!cn.srs",
-        "download_detour": "Direct"
-      },
-      {
-        "type": "remote",
-        "tag": "steam@cn_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-steam@cn.srs",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
         "download_detour": "Direct"
       },
       {
         "type": "remote",
         "tag": "youtube_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-youtube.srs",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs",
         "download_detour": "Direct"
       }
     ],

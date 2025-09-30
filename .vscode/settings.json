@@ -1,4 +1,12 @@
 {
   "editor.formatOnPaste": false,
-  "editor.formatOnSave": false
+  "editor.formatOnSave": false,
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "/configs/*.jsonc"
+      ],
+      "url": "https://github.com/jiang-zhexin/typebox/releases/latest/download/schema.json"
+    }
+  ]
 }
