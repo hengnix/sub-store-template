@@ -48,10 +48,7 @@
         "server": "local"
       },
       {
-        "rule_set": [
-          "connectivity-check_domain",
-          "private_domain"
-        ],
+        "rule_set": "connectivity-check_domain",
         "server": "local"
       },
       {
@@ -329,11 +326,6 @@
         "tag": "google_domain",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google.srs",
         "download_detour": "Direct"
-      },
-      {
-        "type": "remote",
-        "tag": "private_domain",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs"
       },
       {
         "type": "remote",
